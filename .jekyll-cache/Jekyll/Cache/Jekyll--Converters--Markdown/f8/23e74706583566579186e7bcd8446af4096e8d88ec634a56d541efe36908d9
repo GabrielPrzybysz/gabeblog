@@ -1,0 +1,198 @@
+I"~4<p><strong>Author</strong>: Gabriel Przybysz Gonçalves Júnior - Backend Programmer <br /></p>
+
+<h1 id="how-i-created-my-personal-4chan"><strong>How I created my personal 4chan</strong></h1>
+
+<p>Forant Anonymous Topics is based/inspired by the famous 4Chan. In it, users post random topics anonymously, where the newest ones are above the old ones. However, on Forant Anonymous Topics, daily, topics are automatically deleted. An interface is simple and, image upload is not allowed. Creating it was 100% free for testing (Using the AWS Cloud’s free tier services.)</p>
+
+<h1 id="flowchart-and-overview">Flowchart and overview</h1>
+<p>The application was created using ASP.NET, which allows the creation of dynamic pages, together with AWS Cloud, allowing the creation of REST APIs (API Gateway), a NoSQL database (DynamoDB), and Lambdas (Python 3.8). The application’s core is the data requests for the API Gateway using the Services.cs class. The REST APIs make a call to a specific lambda of put, get, or comment. With the information received, it is possible to create dynamic pages, listing comments, topics, authors… Using a Topic object, which shapes the elements brought from the database, which has the following structure: <br /></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Id</strong></td>
+      <td>A Guid that looks like this: be5d82ffff744f86ac817c39dc0d8582</td>
+    </tr>
+    <tr>
+      <td><strong>Nickname</strong></td>
+      <td>Field filled in by the user at the time of topic creation</td>
+    </tr>
+    <tr>
+      <td><strong>Title</strong></td>
+      <td>Topic title, filled in by the user at the time of topic creation</td>
+    </tr>
+    <tr>
+      <td><strong>Text</strong></td>
+      <td>The content of the topic, filled in by the user at the time of topic creation</td>
+    </tr>
+    <tr>
+      <td><strong>Comments</strong></td>
+      <td>Anonymous comments on the topic in question</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>And daily, using the AWS Cloud’s EventBridge service, the daily-remover lambda is called, completely cleaning the database (DynamoDB).</p>
+
+<p>For better visualization of the communication, see the flowchart:</p>
+
+<p><img src="https://lh6.googleusercontent.com/bqqntdP_KcNC-ITKWRs7XlYqe2vFY4kFpDBZdceHON6VH-KaH8kPMYkIGqAIVBOIebjiJyxzjwz92s9nk-eMryhJDoUTeLeGLfz4Is8dffHXaO0n-90Uu5JcOCLwgdueCu13BDIx" alt="" /></p>
+<h2 id="aspnet-technology">ASP.NET Technology</h2>
+
+<p>“ASP.NET offers three frameworks for building Web applications: Web Forms, ASP.NET MVC, and ASP.NET Web Pages. All three frameworks are stable and mature, and you can build great web apps with any of them. Regardless of which framework you choose, you’ll get all the benefits and features of ASP.NET everywhere.
+Each framework targets a different development style. What you choose depends on a combination of your programming assets (development knowledge, skills, and experience), the type of application you are building, and the development approach you are familiar with.
+Below is an overview of each of the structures and some ideas on how to choose between them. If you prefer an introduction to the video, see Making Sites With ASP.net and What Are Web Tools?” - Explanation taken from Microsoft documentation.</p>
+
+<h3 id="binding-method">Binding Method</h3>
+
+<p>An example of binding is the one done for our Nickname field:</p>
+
+<p><strong>HTML:</strong></p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">"text"</span> <span class="na">asp-for=</span><span class="s">"Nickname"</span> <span class="na">placeholder=</span><span class="s">"Your Nick"</span><span class="nt">&gt;</span>
+</code></pre></div></div>
+
+<p><strong>Controller:</strong></p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">[</span><span class="n">BindProperty</span><span class="p">]</span> <span class="k">public</span> <span class="kt">string</span> <span class="n">Nickname</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span> <span class="p">=</span> <span class="s">""</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>So when the post method is called the values ​​are mapped to the string Nickname. “This means action methods will have one or more parameters and those parameters will receive their values ​​from the model binding framework.” http://www.binaryintellect.net/articles/85fb9a1d-6b0d-4d1f-932c-555bd27ba401.aspx</p>
+
+<h2 id="servicescs">Services.cs</h2>
+
+<p>It is used to create and send HTTP requests in a fully async way.
+We can see an example when creating a new topic:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">async</span> <span class="n">Task</span> <span class="nf">PutTopic</span><span class="p">(</span><span class="n">Topic</span> <span class="n">newTopic</span><span class="p">)</span>
+<span class="p">{</span>
+   <span class="n">WebRequest</span> <span class="n">request</span> <span class="p">=</span> <span class="n">WebRequest</span><span class="p">.</span><span class="nf">Create</span> <span class="p">(</span><span class="s">"https://url.execute-api.us-east-2.amazonaws.com/default/topic-setter"</span><span class="p">);</span>
+   <span class="n">request</span><span class="p">.</span><span class="n">Method</span> <span class="p">=</span> <span class="s">"POST"</span><span class="p">;</span>
+   <span class="n">request</span><span class="p">.</span><span class="n">ContentType</span> <span class="p">=</span> <span class="s">"application/json"</span><span class="p">;</span>
+   <span class="n">request</span><span class="p">.</span><span class="n">Headers</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"x-api-key"</span><span class="p">,</span><span class="s">"key"</span><span class="p">);</span>
+  
+   <span class="k">using</span> <span class="p">(</span><span class="kt">var</span> <span class="n">streamWriter</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">StreamWriter</span><span class="p">(</span><span class="k">await</span> <span class="n">request</span><span class="p">.</span><span class="nf">GetRequestStreamAsync</span><span class="p">()))</span>
+   <span class="p">{</span>
+       <span class="kt">string</span> <span class="n">json</span> <span class="p">=</span> <span class="n">JsonConvert</span><span class="p">.</span><span class="nf">SerializeObject</span><span class="p">(</span><span class="n">newTopic</span><span class="p">);</span>
+       <span class="k">await</span> <span class="n">streamWriter</span><span class="p">.</span><span class="nf">WriteAsync</span><span class="p">(</span><span class="n">json</span><span class="p">);</span>
+   <span class="p">}</span>
+
+   <span class="k">await</span> <span class="n">request</span><span class="p">.</span><span class="nf">GetResponseAsync</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>It makes a request to the topic-setter, which creates a new topic in DynamoDB and returns a statuscode 200.</p>
+
+<h2 id="lambdas">Lambdas</h2>
+
+<p>To create the lambdas follow these steps:</p>
+
+<ol>
+  <li>
+    <p><strong>Inside of console, look for the lambda service</strong> <br />
+<img src="https://lh3.googleusercontent.com/w-DWV9RObC3TIOUNywYfg-HXbri6FZcuK090EGl3hkNj2hpIvIV4fJ6IGhTDGzB-ORfbYvu_6gj_IXqXZF_KdlgqWtr9FfxHezJD4bDJb2S8sRXj9GrkYUxt2g3ZKM96Oqo66KJp" alt="" />
+ <br /></p>
+  </li>
+  <li>
+    <p><strong>Go to “Create a function”</strong> <br /></p>
+  </li>
+</ol>
+
+<p><img src="https://lh5.googleusercontent.com/T4Zdim5GI2sCGoJ0jPzrKfyxzKCMMiOi-zbkzUwPJmgOGxl5wTOkYAdVR06qTtFoyCLMJedzvwYY2zSfaLTibc1EqxMVKsmN6WX4D9dGs4WvH4-7xDbwCXRSnHyWMP4aqm-ByPj4" alt="" />
+<br /></p>
+
+<ol>
+  <li>
+    <p><strong>Set the following informations:</strong></p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1.  Function Name
+
+2.  Use architecture x86_64
+
+3.  Choose the language to use to write your function. (Python3.8)
+
+4.  To create roles, let it create automatically and change it later
+</code></pre></div>    </div>
+  </li>
+  <li><strong>After creating it, go to Configurations &gt; Permissions &gt; Click on your Role</strong></li>
+  <li><strong>Add policies &gt; add “AmazonDynamoDBFullAccess”</strong></li>
+</ol>
+
+<h2 id="code"><em>Code</em></h2>
+
+<h3 id="topic-getter">Topic-Getter</h3>
+<p>In this lambda we can have two different types of responses. The first one, sent a
+“Id = /” in the request body, to receive all topics. The second sent a valid id thus receiving a specific topic. The code can be seen at: https://github.com/GabrielPrzybysz/forant-anonymous-topics/blob/main/aws-lambdas/topic-getter.py</p>
+
+<h3 id="topic-setter">Topic-Setter</h3>
+<p>It receives the following object serialized by the Newtonsoft library in its body:</p>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">class</span> <span class="nc">Topic</span>
+<span class="p">{</span>
+
+	<span class="k">public</span> <span class="nf">Topic</span><span class="p">(</span><span class="kt">string</span> <span class="n">id</span><span class="p">,</span> <span class="kt">string</span> <span class="n">author</span><span class="p">,</span> <span class="kt">string</span> <span class="n">title</span><span class="p">,</span> <span class="kt">string</span> <span class="n">text</span> <span class="p">,</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="n">comments</span><span class="p">)</span>
+
+	<span class="p">{</span>
+
+		<span class="n">Id</span> <span class="p">=</span> <span class="n">id</span><span class="p">;</span>
+
+		<span class="n">Author</span> <span class="p">=</span> <span class="n">author</span><span class="p">;</span>
+
+		<span class="n">Title</span> <span class="p">=</span> <span class="n">title</span><span class="p">;</span>
+
+		<span class="n">Text</span> <span class="p">=</span> <span class="n">text</span><span class="p">;</span>
+
+		<span class="n">Comments</span> <span class="p">=</span> <span class="n">comments</span><span class="p">;</span>
+
+	<span class="p">}</span>
+
+	<span class="k">public</span> <span class="kt">string</span> <span class="n">Id</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+  
+
+	<span class="k">public</span> <span class="kt">string</span> <span class="n">Author</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+	<span class="k">public</span> <span class="kt">string</span> <span class="n">Title</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+	<span class="k">public</span> <span class="kt">string</span> <span class="n">Text</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+	<span class="k">public</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="n">Comments</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Thus, performing a put operation for DynamoDB, adding one more daily topic.</p>
+
+<h3 id="daily-remover">Daily-Remover</h3>
+<p>It scans the entire dynamo table daily and using boto3’s batch_writer feature, it deletes item by item</p>
+
+<h1 id="api-gateway">API Gateway</h1>
+
+<p>All my REST APIs have an api-key, thus making the process more secure, and also in them, there is a limit of requests per second, thus avoiding any attack of multiple requests.</p>
+
+<ol>
+  <li><strong>In the tab of your lambda, look for the “Add Trigger”</strong> 
+<br /></li>
+</ol>
+
+<p><img src="https://lh6.googleusercontent.com/zge7ic17fdKw4XfWAaU2MJ8vaUz72jzb9X2kFeUq8YJ4MniTfxFEgSaEFnaMSUgf7K6oLPnMeQU9qGCDMIOPkkhZ0xWiS1QHOWnZkbKp0TQ83iFkcRB-NnmMpu_I5IqxEMt81FwA" alt="" />
+<br /></p>
+
+<ol>
+  <li><strong>When choosing the trigger configuration, choose “API Gateway”</strong>
+ <br /></li>
+</ol>
+
+<p><img src="https://lh3.googleusercontent.com/DkrgiJs1TyEzgzyXBpo_DdEDc-Oh4VDBGJw6PDYcyw7XXWCCIibwyVChXC_MraqFIeHGa1YITdReWxQzmkNEfEpxApah8K-0_2K4dttNTPb9QVDxyjV9t6RLTV0bdzvqACOSyCnX" alt="" />
+ <br /></p>
+
+<ol>
+  <li><strong>Configure following the following image</strong> 
+ <br /></li>
+</ol>
+
+<p><img src="https://lh3.googleusercontent.com/ZvK9MfmZQItVcr8i_sVFetxbQaR-iPiER0eNbDliq4N3093QV0FScdkNRavUyds5grotffKxrpCNoEArQPgWXvMKiHsX8XbFVTKSJfT-tHjaVo_jx10oGTbDT4y87m9iqGC8XIOW" alt="" />
+ <br /></p>
+:ET
