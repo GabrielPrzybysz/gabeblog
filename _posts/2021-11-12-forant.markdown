@@ -6,8 +6,6 @@ img: 4ant.jpg
 tags: [C#, AWS Cloud]
 ---
 
-**Author**: Gabriel Przybysz Gonçalves Júnior - Backend Programmer <br>
-
 # **How I created my personal 4chan**
 
 Forant Anonymous Topics is based/inspired by the famous 4Chan. In it, users post random topics anonymously, where the newest ones are above the old ones. However, on Forant Anonymous Topics, daily, topics are automatically deleted. An interface is simple and, image upload is not allowed. Creating it was 100% free for testing (Using the AWS Cloud's free tier services.)
@@ -176,3 +174,8 @@ All my REST APIs have an api-key, thus making the process more secure, and also 
  
 ![](https://lh3.googleusercontent.com/ZvK9MfmZQItVcr8i_sVFetxbQaR-iPiER0eNbDliq4N3093QV0FScdkNRavUyds5grotffKxrpCNoEArQPgWXvMKiHsX8XbFVTKSJfT-tHjaVo_jx10oGTbDT4y87m9iqGC8XIOW)
  <br>
+
+**Author**: Gabriel Przybysz Gonçalves Júnior - Backend Programmer <br>
+**GitHub**: https://github.com/GabrielPrzybysz/forant-anonymous-topics
+
+**Youtube Example**: https://www.youtube.com/watch?v=Iq_ghoTfu24
