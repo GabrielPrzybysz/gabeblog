@@ -28,8 +28,7 @@ The application was created using ASP.NET, which allows the creation of dynamic 
 And daily, using the AWS Cloud's EventBridge service, the daily-remover lambda is called, completely cleaning the database (DynamoDB).
 
 For better visualization of the communication, see the flowchart:
-
-![](https://lh6.googleusercontent.com/bqqntdP_KcNC-ITKWRs7XlYqe2vFY4kFpDBZdceHON6VH-KaH8kPMYkIGqAIVBOIebjiJyxzjwz92s9nk-eMryhJDoUTeLeGLfz4Is8dffHXaO0n-90Uu5JcOCLwgdueCu13BDIx)
+![4TAN - Frame 2](https://user-images.githubusercontent.com/45472156/142034041-b8ee5b88-d731-48ef-8c8b-71a2c61fd2c8.jpg)
 ## ASP.NET Technology
 
 “ASP.NET offers three frameworks for building Web applications: Web Forms, ASP.NET MVC, and ASP.NET Web Pages. All three frameworks are stable and mature, and you can build great web apps with any of them. Regardless of which framework you choose, you'll get all the benefits and features of ASP.NET everywhere.
