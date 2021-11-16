@@ -8,7 +8,7 @@ tags: [C#, AWS Cloud]
 
 # **How I created my personal 4chan**
 
-Forant Anonymous Topics is based/inspired by the famous 4Chan. In it, users post random topics anonymously, where the newest ones are above the old ones. However, on Forant Anonymous Topics, daily, topics are automatically deleted. An interface is simple and, image upload is not allowed. Creating it was 100% free for testing (Using the AWS Cloud's free tier services.)
+Forant Anonymous Topics is based/inspired by the famous 4Chan. In it, users post random topics anonymously, where the newest ones are above the old ones. However, on Forant Anonymous Topics, daily, topics are automatically deleted. The interface is simple and, image upload is not allowed. Creating it was 100% free for testing (Using the AWS Cloud's free tier services.)
 
 # Flowchart and overview
 The application was created using ASP.NET, which allows the creation of dynamic pages, together with AWS Cloud, allowing the creation of REST APIs (API Gateway), a NoSQL database (DynamoDB), and Lambdas (Python 3.8). The application's core is the data requests for the API Gateway using the Services.cs class. The REST APIs make a call to a specific lambda of put, get, or comment. With the information received, it is possible to create dynamic pages, listing comments, topics, authors... Using a Topic object, which shapes the elements brought from the database, which has the following structure: <br>
@@ -113,26 +113,17 @@ It receives the following object serialized by the Newtonsoft library in its bod
 ```csharp
 public class Topic
 {
-
 	public Topic(string id, string author, string title, string text , List<string> comments)
-
 	{
-
 		Id = id;
 
 		Author = author;
-
 		Title = title;
-
 		Text = text;
-
 		Comments = comments;
-
 	}
 
 	public string Id { get; set; }
-
-  
 
 	public string Author { get; set; }
 
@@ -141,7 +132,6 @@ public class Topic
 	public string Text { get; set; }
 
 	public List<string> Comments { get; set; }
-
 }
 ```
 
