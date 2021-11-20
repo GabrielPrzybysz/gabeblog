@@ -1,0 +1,186 @@
+---
+layout: post
+title: BadUsb Attack Analysis
+date: 2021-11-20 20:32:20 +0300
+img: bausb.jpg 
+tags: [C++, Security, Arduino]
+---
+
+
+# **Intro**
+   
+### Warning
+This post is not intended to encourage any illegal activity. It only serves to analyze the mechanisms used by malicious attackers. There is no intention to make our lives less secure (I am completely against anyone trying to do this), quite the contrary, it serves as a warning and a form of precaution. Its purpose is to spread knowledge about information technology and security. Do not use this content for any purpose other than learning more about the subject and protecting your environment.
+    
+
+***⁠”Information Security aims to establish procedures to protect the information and data on your computers, ensuring the privacy, solidity, availability, and integrity of your programs and equipment. ” -   J. Barbosa***
+    
+# References
+    
+### Without the following references, this research would not be possible:
+    
+*Pentest Introduction - **Daniel Moreno** <br>
+HoodLoader2.0.5 Documentation and source code - **NicoHood**<br>
+HID Documentation and source code - **NicoHood***
+    
+
+# What is it?
+    
+
+It is an attack using a device with a USB connection, changing its firmware, causing it to behave like an HID (Human Interface Devices). By default, computers are conditioned to trust this type of device as they are like keyboards and mouse, for example. With that, you can start a command line, download some backdoor or keylogger, hijack information from the browser, among many other results! All this in a short period, so be careful who you access your USB ports and don't lend your pendrive to your friend! It's like you have control over computer's keyboard and mouse, doing everything at a speed above human.
+
+
+Here is an example where the attacker uses BadUSB to download and install a keylogger and the malicious software sends its information to a server.
+  
+![asdd](https://user-images.githubusercontent.com/45472156/142742346-88e727b9-2d81-4585-b3ef-e663ec3b0764.JPG)
+
+ The BadUSB attack was first shown in a Black Hat talk in 2014 by Karsten Nohl, Sascha Krißler and Jakob Lell. Months after the talk, other researchers published code that could be used to exploit the vulnerability. In 2017, the USG was released, designed to prevent BadUSB-type attacks. 
+
+ 
+Lecture link:  [https://www.youtube.com/watch?v=nuruzFqMgIw](https://www.youtube.com/watch?v=nuruzFqMgIw)
+
+# Tech Overview
+    
+The study was done using an Arduino UNO, thus making one of its two microcontrollers, “16u2” (which is normally used for USB-Serial translation) to become an AVR Microcontroller with USB functions.
+    
+### Necessary materials:
+    
+
+ - [x] Arduino Uno 
+ - [x] 3 female-female cables 
+ - [x] 1 female-male cable 
+ - [x] Capacitor 100nF 
+ - [x] Cable Usb 2.0 A/b - Arduino Uno
+  
+
+#  How to be Safe
+
+"Unfortunately, BadUSB attacks are here to stay. But there are numerous ways to protect your environment from them. The simplest way to stop an automated USB attack is to secure your local desktop environment. Ensure all endpoints are patched, are running anti-virus, and restrict local admin access rights." - **JOHN CIRELLY September 21, 2021**
+
+-   ### USB port blocker
+This option works, but may not be the most practical if you want users to use USB devices in the office. It adds a physical layer to the port and can only be unlocked with a key. It's the same idea as the lock and key. It works in critical situations where machines have a lot of sensitive information.
+ <br>![renkforce USB port blocker set including 10 USB locks & 1 key](https://asset.conrad.com/media10/isa/160267/c1/-/en/1487672_AB_03_FB/image.jpg?x=&y=)
+<br> Image from: https://www.conrad.com/p/renkforce-rf-4463016-usb-port-lock-10-piece-set-incl-1-key-black-red-rf-usbblocker-01-1487672
+
+-   ### Using special programs to monitor behavior
+You can use programs like DuckerHunter, to monitor your typing speed. When this type of typing attack occurs it is beyond human capacity, the program notices this and warns you when something like this occurs.
+
+Example: https://github.com/pmsosa/duckhunt 
+    
+-   ### Restricting access to elevated Command Prompt
+For that you can add a password to run CMD as an administrator, putting another layer of security on your device and preventing major damage. In the following tutorial you can see "how to", which is very important and prevents not only BadUsb, but other attacks as well.
+
+**1.**  Go to Registry Editor 
+
+**2.**  Go to “Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System”  and find  “ConsentPomptBehaviorAdmin”
+
+**3.**  Click Modify and change the Value Data to 1. Click OK.
+
+
+# Wire up Arduino Uno
+
+-   Follow the image:
+    
+
+![](https://lh6.googleusercontent.com/ebd-WA4LsjPmLMr_DUwZ4H7bPtmUyPkVGWdaHdyh5LhEovUpLOdO7Oyv3_k7IgnnTp9TCkFyURe3gAYyhk3OQljqjXMvYMSAp11maWL4YlGuil0T7M3gMq-WrqumqCyHp7epoTNj)
+
+  
+  
+
+# What is HoodLoader2
+    
+
+“The great thing about this is that you actually have two fully Arduino compatible Microcontrollers in one Arduino Uno/Mega board – the board most of you already own. Your IO MCU (328/2560) is still reprogrammable if you enter bootloader mode. All you need for this is a normal Arduino Uno/Mega R3 and some cables to install the new HoodLoader2. With version 2.0.5 you can now use HoodLoader2 also on a 32u4 which gives you even more power.” - [https://github.com/NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2)
+
+  
+
+# What is HID
+    
+
+The idea is to enable enhanced USB functions to almost all 'standard' Arduino boards.
+
+  
+
+# How to install HoodLoader2
+
+With Arduino connected to your computer:
+
+1.  Select the Arduino Uno board like you are used to
+2.  Open the installation sketch  [`Installation_Sketch.ino`](https://github.com/NicoHood/HoodLoader2/tree/master/avr/examples/Installation_Sketch)
+4.  Upload the installation sketch to your Arduino Uno
+5.  Wait until "Done uploading"
+6.  **Disconnect the Arduino from USB**
+    
+The Led will blink slow 1blink/sec. Wait until it is finished and the on board led will blink fast 10blink/sec.
+
+URL:`https://raw.githubusercontent.com/NicoHood/HoodLoader2/master/package_NicoHood_HoodLoader2_index.json`
+After
+
+1. Open **Preferences**  of the Arduino IDE.
+2.  Add the URL above in the  **Additional Boards Manager URLs** .
+3.  Open the  **Boards Manager**
+4.  Install  **HoodLoader2**
+5.  Select one of the boards under  **HoodLoader2 Boards**  in Tools->Board menu
+
+![Capture](https://user-images.githubusercontent.com/45472156/142741158-25c0e04d-2009-4215-b024-aec05ab3faf3.PNG)
+
+
+# How to install HID
+   First Download the [Zip](https://github.com/NicoHood/HID/archive/refs/heads/master.zip) . Official instructions on how to install a library can be [found here](http://arduino.cc/en/pmwiki.php?n=Guide/Libraries). 
+
+# POC
+
+For proof of concept, the code used proposes to open the cmd, start the python compiler and sum two numbers (Nothing harmful was created with this code).
+
+```c++
+#include <HID-Project.h>
+#include <HID-Settings.h>
+
+
+void typeKey(int key){
+  Keyboard.press(key);
+  delay(50);
+  Keyboard.release(key);
+}
+
+void setup()
+{
+  AbsoluteMouse.begin();
+  Keyboard.begin();
+
+  delay(1000);
+
+  Keyboard.press(KEY_LEFT_GUI);
+  Keyboard.press(114);
+  Keyboard.releaseAll();
+
+  delay(200);
+
+  Keyboard.print("cmd.exe");
+
+  Keyboard.press(KEY_ENTER);
+  Keyboard.releaseAll();
+
+  delay(1000);
+
+  Keyboard.print("python");
+  
+  Keyboard.press(KEY_ENTER);
+  Keyboard.releaseAll();
+  
+  delay(2000);
+
+  Keyboard.print("1 + 1");
+  
+  Keyboard.press(KEY_ENTER);
+  Keyboard.releaseAll();
+
+  Keyboard.end();
+  AbsoluteMouse.end();
+}
+```
+The following gif aims to show the running code, it shows the moment when the Arduino is connected to the USB and its result, executing the commands in the indicated time:
+
+![ezgif-6-2f42e1eae1f0](https://user-images.githubusercontent.com/45472156/142741198-32395408-57ce-4478-b99f-f17dae299319.gif)
+
+![11b747a9-1bb7-47cd-9c20-b5e93ef1872b](https://user-images.githubusercontent.com/45472156/142741186-498ea1d7-c430-4a9b-8b82-94bf169f0e63.jpg)
