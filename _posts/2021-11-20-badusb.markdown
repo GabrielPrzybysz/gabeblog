@@ -90,7 +90,11 @@ For that you can add a password to run CMD as an administrator, putting another 
 # What is HoodLoader2
     
 
-“The great thing about this is that you actually have two fully Arduino compatible Microcontrollers in one Arduino Uno/Mega board – the board most of you already own. Your IO MCU (328/2560) is still reprogrammable if you enter bootloader mode. All you need for this is a normal Arduino Uno/Mega R3 and some cables to install the new HoodLoader2. With version 2.0.5 you can now use HoodLoader2 also on a 32u4 which gives you even more power.” - [https://github.com/NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2)
+“HoodLoader2 is a CDC BootLoader with self reprogramming and Fast USB-Serial function.
+
+An Arduino Uno/Mega board has two Microcontroller of which one(16u2) is normally used for USB-Serial translation. But we can also use it as standalone AVR Microcontroller with (or without) USB functions as well.
+
+HoodLoader2 gives you the option to reprogram the 16u2 of a normal Arduino Uno/Mega R3 with custom sketches. This means you can use the 16u2 as a normal USB AVR like a Leonardo. You have a full compatible USB-HID core, CDC Serial and you can also use the 7 i/o pins of the 16u2. The extended HID devices of the HID Project also apply for the HoodLoader2.” - [https://github.com/NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2)
 
   
 
