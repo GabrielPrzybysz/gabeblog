@@ -30,7 +30,7 @@ HID Documentation and source code - **NicoHood***
 It is an attack using a device with a USB connection, changing its firmware, causing it to behave like an HID (Human Interface Devices). By default, computers are conditioned to trust this type of device as they are like keyboards and mouse, for example. With that, you can start a command line, download some backdoor or keylogger, hijack information from the browser, among many other results! All this in a short period, so be careful who you access your USB ports and don't lend your pendrive to your friend! It's like you have control over computer's keyboard and mouse, doing everything at a speed above human.
 
 
-Here is an example where the attacker uses BadUSB to download and install a keylogger and the malicious software sends its information to a server.
+Here is an example where the attacker uses BadUSB to download and install a keylogger and the malicious software sends your informations to a server.
   
 ![asdd](https://user-images.githubusercontent.com/45472156/142742346-88e727b9-2d81-4585-b3ef-e663ec3b0764.JPG)
 
