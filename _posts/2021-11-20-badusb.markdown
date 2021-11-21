@@ -53,7 +53,7 @@ The study was done using an Arduino UNO, thus making one of its two microcontrol
  - [x] Cable Usb 2.0 A/b - Arduino Uno
   
 
-#  How to be Safe
+#  How to Protect Yourself
 
 "Unfortunately, BadUSB attacks are here to stay. But there are numerous ways to protect your environment from them. The simplest way to stop an automated USB attack is to secure your local desktop environment. Ensure all endpoints are patched, are running anti-virus, and restrict local admin access rights." - **JOHN CIRELLY September 21, 2021**
 
