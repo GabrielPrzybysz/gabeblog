@@ -188,5 +188,5 @@ The following gif aims to show the running code, it shows the moment when the Ar
 ![ezgif-6-2f42e1eae1f0](https://user-images.githubusercontent.com/45472156/142741198-32395408-57ce-4478-b99f-f17dae299319.gif)
 
 ![11b747a9-1bb7-47cd-9c20-b5e93ef1872b](https://user-images.githubusercontent.com/45472156/142741186-498ea1d7-c430-4a9b-8b82-94bf169f0e63.jpg)
-<br>
-Author: Gabriel Przybysz Gonçalves Júnior - Backend Programmer
+<br><br>
+**Author**: Gabriel Przybysz Gonçalves Júnior - Backend Programmer
