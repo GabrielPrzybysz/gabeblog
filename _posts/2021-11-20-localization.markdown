@@ -14,9 +14,11 @@ tags: [C#, Tools, Python, AWS, Unity]
 Project files: https://github.com/GabrielPrzybysz/liveops-localization-system
 
 **Purpose**
+
 This text aims to talk about the implementation of location systems in digital games. There is no intention to talk about how to write localized text.
 
 **Problem**
+
 Imagine adding thousands of lines and texts from a game with several languages (Russian, Spanish, Portuguese, etc.). A work that this results in is gigantic. The game Frostpunk has hundreds of phrases and several languages, the effort required is very big. Another game in the same situation is Horizon Chase Turbo (I'm currently working on it with the Aquiris team), but it used a solution that makes this task less arduous and less chance of error!
 
 To better understand the problem, see the image.
@@ -31,10 +33,12 @@ All these problems are smoothed out using the following technique.
 
 
 **How to Solve That?**
+
 (We performed an implementation in the Unity game development engine)
 Several ways to localize our game exist, using .xml, .json files, your file pattern, among many others. Editing these types of files is not intuitive, is repetitive, and with a large margin for error. However, in my opinion, the best way to accomplish this task is what I'm going to teach you here, using Google's great tool, Google Sheets, and .csv files!
 
 **LiveOps**
+
 I'll show you how it's possible to do any text update in a LiveOps way without having to recompile your entire game, create a new build and submit it to some platform, giving us the freedom to update some text in less than 10 minutes, 100% LiveOps.
 
  We can get an idea of the file path in the following image:
@@ -54,15 +58,19 @@ I'll show you how it's possible to do any text update in a LiveOps way without h
 # Why Use this Technique?
 
  1. **Anyone can edit the localization**
+
 Not only programmers can edit localization files. Anyone can it's simple to edit strings within the game. It is no longer a complex and dangerous file. It becomes a spreadsheet that is easy to access and modify.
 
  2. **It is possible to automate repetitive texts** 
+
 With a little more advanced knowledge of spreadsheets and Google Sheet formulas, you can automate various texts. No more writing "speech_99", "speech_100" for your text key, do it with a Google Sheets formula.
  
  3. **Finding and editing an error is much easier**
+
 We will see at the time of creating our spreadsheet how to make the margin of error miniscule.
  
  4. **Promotional texts anytime**
+
 By adding the LiveOps system, it's possible to build a "What's New" for your game, for example. In which you can put any text. Encouraging the purchase of some DLC or something! All this without any build, recompilation, etc.
 
 # Creating the Spreadsheet
@@ -71,9 +79,11 @@ The structure is simple. The "header" of the spreadsheet has the access key and 
 ![](https://lh6.googleusercontent.com/3wIVj2hSFCRoBB60nnHvDi94UC3JBCq0NCjywQM9T9iP2aLIZU3KupqXhs0ICEqTmlHEi4MjPh1h74epX9_NuFJk1Y5lwoJkTgVoWxHekEj_YpmtKhw65gp53m9b9BI9awbr18x9)
 
 **Formulas**
+
 To avoid some errors, some formulas were created to identify them:
 
  1. **Empty Cell** 
+
 An empty cell can harm when our Parser reads the .csv, so, to avoid this type of error, we add a Conditional Format to check if there is any and if so, we paint it red:
 
 
@@ -81,11 +91,13 @@ An empty cell can harm when our Parser reads the .csv, so, to avoid this type of
 
 
  2. **Cell with "enter" at the end**
+
 Another thing that can hurt when Parser reads the .csv is the "enter" at the end of the cell. Instead, we use "\n" to prevent another Conditional Format is added:
 
 ![](https://lh5.googleusercontent.com/97NkZsf_hjdYyApjrqrHpRhlt5yB0-At8uV7x0r0qa45hBj8U1LIxQ1HYNKsppWCM3gs0L9n5viykEb1GA91JeLeyMlUsbQI-JHYEXZzWfgLZMTnqk1fhQ6o9WvyggOglX5c6e-f)
 
  3. **Cell with space at the end or beginning**
+
 Unnecessary characters are common. Space at the end and beginning of the cell, to prevent another Conditional Format is added:
 
 ![](https://lh3.googleusercontent.com/N2mKnHtKjwMeL_spL-n40LwBPlZyeKfudKypLITCc55rjVPwRbJIkKnJCd1NMP-fOaUpKBcE6VCzk0tD2Df1GQIJj4GuiKKeQYKTPtdhH88sScVYa4wm76TOlt9ZRoOe-k1qhgZe) 
@@ -99,6 +111,7 @@ Anyone on the internet with this link can view:
 
 
 # Creating Bucket on AWS
+
 This AWS bucket stores the Localization .csv. This .csv comes from a Lambda that we will create in the future, which will feed on our Google Sheets spreadsheet and save the .csv here!
 
 
@@ -111,6 +124,7 @@ This AWS bucket stores the Localization .csv. This .csv comes from a Lambda that
 After carrying out the previous steps, we need a way to have a version of our spreadsheet in AWS S3 in the correct file format, for we are going to use lambdas AWS
 
 **Why AWS Lambdas?**
+
 -   There’s No Infrastructure to Manage
 -   AWS Lambda Has Strong Security Support
 -   AWS Lambdas Are Event Driven
