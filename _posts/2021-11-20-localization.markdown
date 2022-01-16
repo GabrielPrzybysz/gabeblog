@@ -102,13 +102,9 @@ Anyone on the internet with this link can view:
 This AWS bucket stores the Localization .csv. This .csv comes from a Lambda that we will create in the future, which will feed on our Google Sheets spreadsheet and save the .csv here!
 
 
-Enable bucket ACL
+1. Enable bucket ACL
 
-![](https://lh5.googleusercontent.com/S6-eQA9QPiVETxjfc_vId3NT_leStpgAJKkW0xFYNAqTfAImTNfyDpYIG135b7WtxcLq1nYbggIabEgI0QAQkQT6qCr8o9lRTTTsIefiG5IxsFJyTGgpW-egfdSeYDAo8SL9Md-E)
-
-Does not block all public access
-
-![](https://lh6.googleusercontent.com/4y1zDckgMYLNMI1NTuY2ISz4Ig0mn9TL1ZVOJVwIbm5w3-S7jICiyW6EGrI_KMv84GIY3RBhATAanojwKKNZXg6oHlvqHtiquLCZ_Coi7DiaudLya3sMgXdltYsmmhJ77wXmivio)
+2. Does not block all public access
 
 
 # Creating Lambda 
