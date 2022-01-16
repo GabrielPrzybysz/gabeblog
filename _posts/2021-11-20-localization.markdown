@@ -126,9 +126,13 @@ After carrying out the previous steps, we need a way to have a version of our sp
 **Why AWS Lambdas?**
 
 a.   There’s No Infrastructure to Manage
+
 b.   AWS Lambda Has Strong Security Support
+
 c.   AWS Lambdas Are Event Driven
+
 d.   You Only Pay for What You Use
+
 
 To create our lambda we use the lambdas system offered by AWS, and python3 (Teaching how to create it in [previous post](https://gabrielprzybysz.github.io/gabeblog/forant/) on "Lambdas" section). The lambda created below can be called by some API or scheduler to constantly update localization.
 
