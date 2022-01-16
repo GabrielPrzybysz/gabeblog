@@ -57,19 +57,19 @@ I'll show you how it's possible to do any text update in a LiveOps way without h
 
 # Why Use this Technique?
 
- 1. **Anyone can edit the localization**
+1. **Anyone can edit the localization**
 
 Not only programmers can edit localization files. Anyone can it's simple to edit strings within the game. It is no longer a complex and dangerous file. It becomes a spreadsheet that is easy to access and modify.
 
- 2. **It is possible to automate repetitive texts** 
+2. **It is possible to automate repetitive texts** 
 
 With a little more advanced knowledge of spreadsheets and Google Sheet formulas, you can automate various texts. No more writing "speech_99", "speech_100" for your text key, do it with a Google Sheets formula.
  
- 3. **Finding and editing an error is much easier**
+3. **Finding and editing an error is much easier**
 
 We will see at the time of creating our spreadsheet how to make the margin of error miniscule.
  
- 4. **Promotional texts anytime**
+4. **Promotional texts anytime**
 
 By adding the LiveOps system, it's possible to build a "What's New" for your game, for example. In which you can put any text. Encouraging the purchase of some DLC or something! All this without any build, recompilation, etc.
 
@@ -82,7 +82,7 @@ The structure is simple. The "header" of the spreadsheet has the access key and 
 
 To avoid some errors, some formulas were created to identify them:
 
- 1. **Empty Cell** 
+1. **Empty Cell** 
 
 An empty cell can harm when our Parser reads the .csv, so, to avoid this type of error, we add a Conditional Format to check if there is any and if so, we paint it red:
 
@@ -90,13 +90,13 @@ An empty cell can harm when our Parser reads the .csv, so, to avoid this type of
 ![](https://lh4.googleusercontent.com/RFP7NGQNrhzdyjNOwSHryS78Ld1cgNmT5gG6rJ31slV4YuLIjPu-ckw-T9fWkwGZ7mHErmafHZL3qINjE7rya7aCErA0LzRAqRCV6CBkY54AQLtm7rnHevurESX72TLU0CosqxkZ)
 
 
- 2. **Cell with "enter" at the end**
+2. **Cell with "enter" at the end**
 
 Another thing that can hurt when Parser reads the .csv is the "enter" at the end of the cell. Instead, we use "\n" to prevent another Conditional Format is added:
 
 ![](https://lh5.googleusercontent.com/97NkZsf_hjdYyApjrqrHpRhlt5yB0-At8uV7x0r0qa45hBj8U1LIxQ1HYNKsppWCM3gs0L9n5viykEb1GA91JeLeyMlUsbQI-JHYEXZzWfgLZMTnqk1fhQ6o9WvyggOglX5c6e-f)
 
- 3. **Cell with space at the end or beginning**
+3. **Cell with space at the end or beginning**
 
 Unnecessary characters are common. Space at the end and beginning of the cell, to prevent another Conditional Format is added:
 
