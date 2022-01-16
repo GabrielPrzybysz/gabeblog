@@ -8,7 +8,7 @@ tags: [C#, Tools, Python, AWS Cloud, Unity]
 
 Project files: https://github.com/GabrielPrzybysz/liveops-localization-system
 
-## Intro
+# Intro
 
 ### **Purpose**
 
