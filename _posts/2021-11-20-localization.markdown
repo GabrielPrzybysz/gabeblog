@@ -18,7 +18,7 @@ This text aims to talk about the implementation of location systems in digital g
 
 Imagine adding thousands of lines and texts from a game with several languages (Russian, Spanish, Portuguese, etc.). A work that this results in is gigantic. The game Frostpunk has hundreds of phrases and several languages, the effort required is very big. Another game in the same situation is Horizon Chase Turbo (I'm currently working on it with the Aquiris team), but it used a solution that makes this task less arduous and less chance of error!
 
-How does the game dynamically change languages? How does the game change all the text with just one user input? What if developers want to change some phrase in a specific language, a file with thousands and thousands of characters? How to find this particular phrase?
+How does the game dynamically change languages? How does the game change all the text with just one user input? What if developers want to change some phrase in a specific language, in a file with thousands and thousands of characters? How to find this particular phrase?
 
 All these problems are smoothed out using the following technique.
 
