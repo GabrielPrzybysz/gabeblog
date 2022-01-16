@@ -6,9 +6,6 @@ img: localization.jpg
 tags: [C#, Tools, Python, AWS Cloud, Unity]
 ---
 
-
-# Good Practices to Localize Your Game
-
 ## Intro
 
 Project files: https://github.com/GabrielPrzybysz/liveops-localization-system
