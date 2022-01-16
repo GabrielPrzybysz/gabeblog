@@ -3,7 +3,7 @@ layout: post
 title: Good Practices to Localize Your Game
 date: 2022-01-15 20:32:20 +0300
 img: localization.jpg 
-tags: [C#, Tools, Python, AWS, Unity]
+tags: [C#, Tools, Python, AWS Cloud, Unity]
 ---
 
 
