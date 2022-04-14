@@ -7,11 +7,11 @@ tags: [Python3, Cloudflare, Unity, C#]
 ---
 
 ## *Special Thanks*
-Tiago Zanchi 
+[Tiago Zanchi](https://www.linkedin.com/in/tiagozanchi/)
 
-Giuliano Ferrari 
+[Giuliano Ferrari](https://www.linkedin.com/in/giuliano-ferrari-1908b836/)
 
-Paulo Godinho 
+[Paulo Godinho](https://www.linkedin.com/in/paulohgodinho/)
 
 # **Intro**
 On a Monday afternoon, we received a report from a player. He reported a problem when purchasing a DLC. After that, we started a saga to solve the bug. First, the tester would have to be able to reproduce on our device. Following the player's steps, the bug was quickly reproduced. But what now? Few clues as to what could be happening. There was no way for us to see the logs (the device didn't allow this to be possible in a simple way), which was essential to find a solution!
