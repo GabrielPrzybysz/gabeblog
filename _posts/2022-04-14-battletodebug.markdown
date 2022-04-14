@@ -6,8 +6,13 @@ img: a_battle_to_debug.jpg
 tags: [Python3, Cloudflare, Unity, C#]
 ---
 
+## *Special Thanks*
+Tiago Zanchi (https://www.linkedin.com/in/tiagozanchi/)
+Giuliano Ferrari (https://www.linkedin.com/in/giuliano-ferrari-1908b836/)
+Paulo Godinho (https://www.linkedin.com/in/paulohgodinho/)
+
 # **Intro**
-On a Monday afternoon, we received a report from a player. He reported a problem when purchasing a DLC. After that, we started a saga to solve the bug. First, the tester would have to be able to reproduce on our device. Following the player's steps, the bug was quickly reproduced. But and now? Few clues as to what could be happening. There was no way for us to see the logs (the device didn't allow this to be possible in a simple way), which was essential to find a solution!
+On a Monday afternoon, we received a report from a player. He reported a problem when purchasing a DLC. After that, we started a saga to solve the bug. First, the tester would have to be able to reproduce on our device. Following the player's steps, the bug was quickly reproduced. But what now? Few clues as to what could be happening. There was no way for us to see the logs (the device didn't allow this to be possible in a simple way), which was essential to find a solution!
 
 The first idea we had was to use a ready-made technology like Datadog, Datatrace, or even the Unity solution, "Cloud Diagnostics". But this was all too robust for what we needed, and with an implementation that would take longer than we had. So, together with the team, we came up with a practical and quick solution, which I intend to comment on here in this post.
 
@@ -23,11 +28,11 @@ As we can see in the image, the idea was to be agile, to do everything locally. 
 
 ## *Tunnels*
 
-"In 2018, Cloudflare introduced Argo Tunnel, a  **private, secure connection**  between your origin and Cloudflare. Traditionally, from the moment an Internet property is deployed, developers spend an exhaustive amount of time and energy locking it down through access control lists, rotating ip addresses, or clunky solutions like GRE tunnels.
+"In 2018, Cloudflare introduced Argo Tunnel, a  **private, secure connection**  between your origin and Cloudflare. Traditionally, from the moment an Internet property is deployed, developers spend an exhaustive amount of time and energy locking it down through access control lists, rotating ip addresses, or clunky solutions like GRE tunnels."
 
-We built Tunnel to help alleviate that burden.
+"We built Tunnel to help alleviate that burden."
 
-With Tunnel, users can create a private link from their origin server directly to Cloudflare without a publicly routable IP address. Instead, this private connection is established by running a lightweight daemon, cloudflared, on your origin, which creates a secure, outbound-only connection. This means that only traffic that routes through Cloudflare can reach your origin."
+"With Tunnel, users can create a private link from their origin server directly to Cloudflare without a publicly routable IP address. Instead, this private connection is established by running a lightweight daemon, cloudflared, on your origin, which creates a secure, outbound-only connection. This means that only traffic that routes through Cloudflare can reach your origin."
 
 https://blog.cloudflare.com/tunnel-for-everyone/
 
@@ -90,7 +95,7 @@ We add the script to a GameObject. In Awake we put a "DontDestroyOnLoad(this);"
 
 Now we have a link between the device and the developer. We added logs where we thought the error was, did a build, and the good news came, so we saw explicitly what was happening and the reason for the problem. The solution for capturing logs was done in less than two hours. We quickly had something valuable in our hands, something simple and effective that can be reused in any project and situation.
 
-Then I saw a great post for my blog, sharing this idea so that other devs can debug when it isn't possible to get logs more directly.
+Then I saw a great opportunity for a post on my blog, sharing this idea so that other devs can debug when it isn't possible to get logs more directly.
 
 Author: Gabriel Przybysz Gonçalves Júnior - Backend Programmer
 GitHub: https://github.com/GabrielPrzybysz/battle-logs
