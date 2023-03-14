@@ -140,13 +140,6 @@ For proof of concept, the code used proposes to open the cmd, start the python c
 #include <HID-Project.h>
 #include <HID-Settings.h>
 
-
-void typeKey(int key){
-  Keyboard.press(key);
-  delay(50);
-  Keyboard.release(key);
-}
-
 void setup()
 {
   AbsoluteMouse.begin();
