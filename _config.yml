@@ -1,6 +1,6 @@
 title: Hello, world! I'm Gabriel Przybysz
 description: > # this means to ignore newlines until "baseurl:"
-  I'm 18 years old, I started in the technology industry at 14. Passionate about programming, math and infosec.
+  I'm 19 years old, I started in the technology industry at 14. Passionate about programming, math and infosec.
 
 permalink: ':title/'
 baseurl: "/" # the subpath of your site, e.g. /blog
