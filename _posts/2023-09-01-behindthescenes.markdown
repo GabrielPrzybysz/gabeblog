@@ -1,18 +1,13 @@
 ---
 layout: post
-title: A Battle to Debug
-date: 2022-04-12 20:32:20 +0300
-img: a_battle_to_debug.jpg 
-tags: [Python3, Cloudflare, Unity, C#]
+title: AskFlow Security - My Experience Conducting Penetration Testing for a Friend's App
+date: 2023-09-01 20:32:20 +0300
+img: askflow.jpg 
+tags: [Python3, Cloudflare, Security, Pentest]
 ---
 
 ## *Special Thanks*
-[Tiago Zanchi](https://www.linkedin.com/in/tiagozanchi/)
-
-[Giuliano Ferrari](https://www.linkedin.com/in/giuliano-ferrari-1908b836/)
-
-[Paulo Godinho](https://www.linkedin.com/in/paulohgodinho/)
-
+[Heitor](https://www.linkedin.com/in/heitor-melegate/)
 
 **Important Notice: Consent and Purpose of Security Assessment**
 
@@ -45,6 +40,9 @@ Now, let's get this show on the road – it's game time! 🚀
 
 The API is providing data for the question-and-answer website he (Heitor) put together – it's kind of like a Stack Overflow. This gives us a solid attack surface; the application has a login system, posts, users, images, and so on. So, there's quite a bit to explore.
 
+![askflowintro](https://github.com/GabrielPrzybysz/gabeblog/assets/45472156/6f5e9b36-e49e-424b-b339-ca6949db14bd)
+
+
 ## First Step
 
 **Initial Approach:** 
@@ -54,7 +52,11 @@ When dealing with web applications, my first move is to begin by mapping out the
 
 Let's delve into this pivotal phase. As we're conducting a "whitebox" penetration test, we have a clear view of the inner workings. When we navigate to the `resources.go` class, we encounter a comprehensive compilation of all the endpoints the application offers. Each of these access points represents a specific functionality within the application, be it actions, requests, or displays.
 
+![Capturar](https://github.com/GabrielPrzybysz/gabeblog/assets/45472156/2087073c-c905-441c-9d22-2ea748133e4a)
+
 This list of endpoints serves as a map guiding our testing journey. Each one of them is a potential entry point, and our goal is to meticulously explore and scrutinize each one. This in-depth analysis will enable us to understand how
+
+---
 
 ## Exhaustion DoS (Denial of Service by Exhaustion):
 
@@ -74,8 +76,7 @@ There are several forms of exhaustion that can be used in Exhaustion DoS attacks
 
 5. **Authentication Exhaustion:** Certain systems require authentication for granting access. Authentication exhaustion attacks involve repeated and massive attempts at authentication, which can overwhelm the authentication system and deny access to legitimate users.
 
----
-## Initial Observations and Vulnerabilities:
+### Initial Observations and Vulnerabilities:
 
 One of the first things I noticed was the API's ability to accept strings of any length in fields like login, password, title, and others. Right off the bat, I realized that this feature could indicate an avenue for handling requests of varying sizes. This is how I pinpointed one of the initial vulnerabilities, which was related to a potential Denial of Service (DoS) that could impact the service's availability.
 
@@ -83,30 +84,35 @@ Now, our next step is to craft a Proof of Concept (PoC) to validate the existenc
 
 Let's delve into what occurs when we send a POST request to this endpoint:
 
-![Image](image_link_here)
+![login_dos_](https://github.com/GabrielPrzybysz/gabeblog/assets/45472156/0df12802-ae07-4458-966e-91e9acd66a68)
 
----
+ We were able to send it in a very simple way, just requiring the used body, without any additional validation.
 
- ## Exploring the Model and Potential Weaknesses:
+### Exploring the Model and Potential Weaknesses:
 
 So, here's the deal: the API is using a default model for all the requests that involve users. Now, that might not make much sense and could cause some response time hiccups, not to mention spilling some interesting beans for the troublemakers out there.
 
 Now, check this out, we can take a few swings to see if there's a shot at a Denial of Service (DoS) attack. But here's a more chill approach I'm putting on the table: let's whip up a massive, random string and chuck it into the email field. Then, when the system goes snooping around for that email in the database, it might get a bit tangled and start maxing out the API in all sorts of ways.
 
-This is where things get intriguing: the JSON gets received, and the whole model-linking magic unfolds:
 
-![Image](image_link_here)
-
----
-
-## Digging into Server Stats:
+### Digging into Server Stats:
 
 I've got access to the server's statistical data, so let's roll up our sleeves and dive into the metrics. But before we jump into that, let's fire up our Python script:
 
-script
-falar do server
+![python_dos](https://github.com/GabrielPrzybysz/gabeblog/assets/45472156/682d46e0-e7f6-4753-a393-e823ba4e5d1c)
+
+During the conducted tests, one of the observed scenarios was the complete exhaustion of server resources, including RAM, CPU, and other essential resources. This occurred due to a resource exhaustion test, where a large number of requests were sent at high frequency to the target application.
+
+![image](https://github.com/GabrielPrzybysz/gabeblog/assets/45472156/a60f523e-cceb-429f-ab75-45b29f1308e8)
+
+This was the last screenshot I managed to capture before the server went completely offline. It vividly illustrates the substantial resource consumption that was taking place at the moment of the server failure.
+
+
+![down_home](https://github.com/GabrielPrzybysz/gabeblog/assets/45472156/b6150891-4b94-42fc-abe9-f4c29041a0d2)
+
 
 And guess what? This goes down the same way for all the other endpoints, with a pretty similar impact.
+
 ---
 
 ## IDOR (Insecure Direct Object References)
@@ -118,14 +124,26 @@ It's a security vulnerability where a clever attacker can mess around with the p
 
 Taking a sweep through the application, we spot the JWT implementation, and that's when I got a bit less confident about the potential for an IDOR in the authentication. But taking a closer look, we realize that the parameter controlling the session is outside the JWT.
 
-![Image here]
+![image](https://github.com/GabrielPrzybysz/gabeblog/assets/45472156/3e611543-13ae-4e22-9ca7-55aa0bdd6613)
 
-So, simply by tweaking a value in the request and sending any valid JWT, you could play the role of any existing user in the database (meme). This got us excited for the Proof of Concept (PoC) phase. We're going to cook up a Python script to show how to do this with some class <3
+So, simply by tweaking a value in the request and sending any valid JWT, you could play the role of any existing user in the database. 
 
-The script is simple, it's going to create a post as if it were user X:
+I am logged in as the user (id: 22):
+
+![image](https://github.com/GabrielPrzybysz/gabeblog/assets/45472156/b5a2014a-ed87-4af7-ad07-90bf50952920)
 
 
-And voilà, we've made the post as if it were...
+I want to make a post as (id: 12):
+
+![image](https://github.com/GabrielPrzybysz/gabeblog/assets/45472156/eb8a400d-14a8-47c4-b1bb-df8d98dfdd8a)
+
+This got us excited for the Proof of Concept (PoC) phase. We're going to cook up a Python script to show how to do this with some class <3 The script is simple, it's going to create a post as if it were user 12:
+
+![image](https://github.com/GabrielPrzybysz/gabeblog/assets/45472156/19b642b7-3ff2-44cd-8fac-f25ad8248135)
+
+And voilà, we've made the post!
+
+![image](https://github.com/GabrielPrzybysz/gabeblog/assets/45472156/e55169e1-a7d2-4e95-a828-2c98564ef72b)
 
 **Wiping Everything Out:**
 
@@ -133,13 +151,9 @@ Now, in the spirit of flexing our skills, we can also wipe out any post, even if
 
 Just send a delete request to the endpoint /v1/post/{id} with the ID you want, no fuss.
 
-![Image here]
-
 **Taking a Peek at Everyone:**
 
 The same concept repeats multiple times. Sending a request to /v1/user/{id}, you can get a load of information about the user, including their encrypted password.
-
-![Image here]
 
 Additionally, I can edit any user's email by sending a request to /v1/email/{id}.
 
@@ -149,17 +163,21 @@ And hey, I won't list everything here, but basically with the same trick, I can 
 
 Let's circle back to the action of crafting a post, shall we? Remember that image I showed you earlier? Well, take a gander at the field labeled `imgpost`. This field serves as a cozy little spot where you can slot in a URL. Now, here's the twist: this URL gets generated at some point down the line and then stashed away in the database. But guess what? You can play around with this setup and inject any URL you fancy. And voilà, anyone who steps onto the site will be greeted by that injected URL.
 
+![image](https://github.com/GabrielPrzybysz/gabeblog/assets/45472156/cb26d184-8438-4d76-a408-0bd9d5454ba1)
+
 Can you already sense the excitement in the air?
 
 Now, to explore this glitch in a rather neat manner, you can put together a Python server. This bad boy logs all the visits to the site, noting down the IP addresses and the browsers in use.
 
 Check out this script:
 
-```python
-[código do script]
-```
+![image](https://github.com/GabrielPrzybysz/gabeblog/assets/45472156/eca46086-812d-4751-a930-c7e6d492778f)
+![image](https://github.com/GabrielPrzybysz/gabeblog/assets/45472156/432d8d15-a44e-4e13-8c9a-af0dc1e920aa)
 
-And just like that, you're keeping tabs on all the site's activity.
+And just like that, you're keeping tabs on all the site's activity. Take a look: 
+
+![image](https://github.com/GabrielPrzybysz/gabeblog/assets/45472156/ce10d338-3c2c-42fb-bb0b-e5a09b37a094)
+
 
 ## Open Email API Test
 
