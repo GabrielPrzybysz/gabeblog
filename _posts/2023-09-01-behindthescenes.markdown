@@ -1,6 +1,6 @@
 ---
 layout: post
-title: AskFlow Security - My Experience Conducting Penetration Testing for a Friend's App
+title: AskFlow Security
 date: 2023-09-01 20:32:20 +0300
 img: askflow.jpg 
 tags: [Python3, Cloudflare, Security, Pentest]
