@@ -21,7 +21,7 @@ Should you have any questions or concerns regarding this notice or the subsequen
 
 ## Introduction
 
-Well, my buddy **Heitor** just pulled off something pretty cool – he built a fresh new application using the programming language I'm really fond of, Go! Now, because I can't resist getting involved with my friends' projects, I offered to take on the security testing for this one. I've set a challenge for myself: find as many vulnerabilities as I can within 12 hours. And as an added twist, I've decided to do it all manually, just with good old Python.
+Well, my buddy **Heitor** just pulled off something pretty cool – he built a fresh new application using the programming language I'm really fond of, Go! Now, because I can't resist getting involved with my friends' projects, I offered to take on the security testing for this one. I've set a challenge for myself: find as many vulnerabilities as I can within 6 hours. And as an added twist, I've decided to do it all manually, just with good old Python.
 
 Oh, here's a neat thing: this is also the perfect opportunity to put my new Linux distro, BlackArch, through its paces! So, about these tests, they're kind of what you'd call "whitebox" – I've got access to all the code and can chat with Heitor whenever I need to, you know?
 
