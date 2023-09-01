@@ -17,7 +17,7 @@ This report is not aimed at compromising the security of our digital lives; rath
 
 It's important to highlight that all information shared herein has been disclosed only after the identified vulnerabilities were remedied. The intent is always to foster a safer and more secure online environment for all users of the "AskFlow" application.
 
-Should you have any questions or concerns regarding this notice or the subsequent content, please do not hesitate to get in touch for further discussion.
+Should you have any questions or concerns regarding this notice or the subsequent content, please do not hesitate to get in touch for further discussion. I didn't participate in any phase of development, I'm only doing security testing.
 
 ## Introduction
 
