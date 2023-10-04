@@ -24,7 +24,7 @@ The idea was that every time the game used Unity's Debug.Log function, it would 
 
 We need to design our idea. So we use the perfect tool for that MIRO!
 
-![](https://lh5.googleusercontent.com/iq4NNrqwwm03-nAZ5KFdxYWgGisfWlUWkJ20ZV9W3V2l588PheaSd9G18z0u_hFb7tyQTcb-eOO1wAvSkXNx9iflhlfDZeP03s65Bod7THsCl24XdhF0LHR6QVK97zuMpIyN6o8L)
+![image](https://github.com/GabrielPrzybysz/gabeblog/assets/45472156/1309d9a3-dac8-4f93-a322-71d07ada6b42)
 
 As we can see in the image, the idea was to be agile, to do everything locally. With that, we would use Cloudflare's tunnel technology, which makes an "internet" connection with our local machine, in a SUPER SIMPLE way.
 
