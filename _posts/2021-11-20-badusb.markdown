@@ -63,7 +63,7 @@ This option works, but may not be the most practical if you want users to use US
 <br> Image from: https://www.conrad.com/p/renkforce-rf-4463016-usb-port-lock-10-piece-set-incl-1-key-black-red-rf-usbblocker-01-1487672
 
 -   ### Using special programs to monitor behavior
-You can use programs like DuckerHunter, to monitor your typing speed. When this type of typing attack occurs it is beyond human capacity, the program notices this and warns you when something like this occurs.
+You can use programs like DuckerHunter, to monitor your typing speed, etc. When this type of typing attack occurs it is beyond human capacity, the program notices this and warns you when something like this occurs.
 
 Example: https://github.com/pmsosa/duckhunt 
     
