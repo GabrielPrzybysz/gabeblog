@@ -115,40 +115,36 @@ For proof of concept, the code used proposes to open the cmd, start the python c
 #include <HID-Project.h>
 #include <HID-Settings.h>
 
+void typeTextWithEnter(uint8_t key, const char *text)
+{
+  Keyboard.press(key);
+  Keyboard.release(key);
+  Keyboard.print(text);
+  Keyboard.press(KEY_ENTER);
+  Keyboard.release(KEY_ENTER);
+}
+
 void setup()
 {
   AbsoluteMouse.begin();
   Keyboard.begin();
-
   delay(1000);
 
-  Keyboard.press(KEY_LEFT_GUI);
-  Keyboard.press(114);
-  Keyboard.releaseAll();
-
+  typeTextWithEnter(KEY_LEFT_GUI, "r");
   delay(200);
 
-  Keyboard.print("cmd.exe");
-
-  Keyboard.press(KEY_ENTER);
-  Keyboard.releaseAll();
-
+  typeTextWithEnter(0, "cmd.exe");
   delay(1000);
 
-  Keyboard.print("python");
-  
-  Keyboard.press(KEY_ENTER);
-  Keyboard.releaseAll();
-  
+  typeTextWithEnter(0, "python");
   delay(2000);
 
-  Keyboard.print("1 + 1");
-  
-  Keyboard.press(KEY_ENTER);
-  Keyboard.releaseAll();
+  typeTextWithEnter(0, "1 + 1");
 
   Keyboard.end();
   AbsoluteMouse.end();
+}
+
 }
 ```
 The following gif aims to show the running code, it shows the moment when the Arduino is connected to the USB and its result, executing the commands in the indicated time:
