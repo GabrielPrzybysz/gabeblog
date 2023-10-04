@@ -144,8 +144,6 @@ void setup()
   Keyboard.end();
   AbsoluteMouse.end();
 }
-
-}
 ```
 The following gif aims to show the running code, it shows the moment when the Arduino is connected to the USB and its result, executing the commands in the indicated time:
 
