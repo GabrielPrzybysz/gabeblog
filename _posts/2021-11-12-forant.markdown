@@ -1,6 +1,6 @@
 ---
 layout: post
-title: How I Created A Chan Forum
+title: How I Created a Serverless Chan Forum
 date: 2021-11-12 20:32:20 +0300
 img: 4ant.jpg 
 tags: [C#, AWS Cloud]
