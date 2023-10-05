@@ -107,7 +107,7 @@ After
 
 
 # How to install HID
-   First Download the [Zip](https://github.com/NicoHood/HID/archive/refs/heads/master.zip) . Official instructions on how to install a library can be [found here](http://arduino.cc/en/pmwiki.php?n=Guide/Libraries).
+   First Download the [Zip](https://github.com/NicoHood/HID/archive/refs/heads/master.zip) . Official instructions on how to install a library can be [found here](https://docs.arduino.cc/software/ide-v1/tutorials/installing-libraries).
 
 # POC
 
