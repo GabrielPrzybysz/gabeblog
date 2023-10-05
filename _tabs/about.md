@@ -18,7 +18,7 @@ Knowledge is power, and together, we have the power to shape the future.
 
 ## Who Am I
 
-I'm a puzzle-solving addict, a systems architect, and a cybersecurity enthusiast. I thrive on challenges and I'm addicted to cracking complex problems. That's what keeps me going every day.
+I'm a puzzle-solving addict, a systems architect, and a cybersecurity guy. I thrive on challenges and I'm addicted to cracking complex problems. That's what keeps me going every day.
 
 ## What Drives Me
 
