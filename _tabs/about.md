@@ -35,11 +35,11 @@ My real passion lies in designing intricate systems that are lightning-fast, res
 I've got a special thing going on with various programming languages, including:
 
 - C#
+- C++
+- C
 - Python
-- InfoSec (of course!)
 - JavaScript
 - Java
-- C++
 
 ## Wanna Peek at My Resume?
 
