@@ -2,55 +2,57 @@
 layout: post
 title: BadUsb Attack Analysis
 date: 2021-11-20 20:32:20 +0300
-img: bausb.jpg 
+categories: [Security, Hardware]
+image:
+  path: /assets/img/bausb.jpg
 tags: [C++, Security, Arduino]
 ---
 
 
 # **Intro**
-   
+
 ### Warning
 This post is not intended to encourage any illegal activity. It only serves to analyze the mechanisms used by malicious attackers. There is no intention to make our lives less secure (I am completely against anyone trying to do this), quite the contrary, it serves as a warning and a form of precaution. Its purpose is to spread knowledge about information technology and security. Do not use this content for any purpose other than learning more about the subject and protecting your environment.
-    
+
 
 ***⁠”Information Security aims to establish procedures to protect the information and data on your computers, ensuring the privacy, solidity, availability, and integrity of your programs and equipment. ” -   J. Barbosa***
-    
+
 # References
-    
+
 ### Without the following references, this research would not be possible:
-    
+
 *Pentest Introduction - **Daniel Moreno** <br>
 HoodLoader2.0.5 Documentation and source code - **NicoHood**<br>
 HID Documentation and source code - **NicoHood***
-    
+
 
 # What is it?
-    
+
 
 It is an attack using a device with a USB connection, changing its firmware, causing it to behave like an HID (Human Interface Devices). By default, computers are conditioned to trust this type of device as they are like keyboards and mouse, for example. With that, you can start a command line, download some backdoor or keylogger, hijack information from the browser, among many other results! All this in a short period, so be careful who you access your USB ports and don't lend your pendrive to your friend! It's like you have control over computer's keyboard and mouse, doing everything at a speed above human.
 
 
 Here is an example where the attacker uses BadUSB to download and install a keylogger and the malicious software sends your informations to a server.
-  
+
 ![asdd](https://user-images.githubusercontent.com/45472156/142742346-88e727b9-2d81-4585-b3ef-e663ec3b0764.JPG)
 
- The BadUSB attack was first shown in a Black Hat talk in 2014 by Karsten Nohl, Sascha Krißler and Jakob Lell. Months after the talk, other researchers published code that could be used to exploit the vulnerability. In 2017, the USG was released, designed to prevent BadUSB-type attacks. 
+ The BadUSB attack was first shown in a Black Hat talk in 2014 by Karsten Nohl, Sascha Krißler and Jakob Lell. Months after the talk, other researchers published code that could be used to exploit the vulnerability. In 2017, the USG was released, designed to prevent BadUSB-type attacks.
 
- 
+
 Lecture link:  [https://www.youtube.com/watch?v=nuruzFqMgIw](https://www.youtube.com/watch?v=nuruzFqMgIw)
 
 # Tech Overview
-    
+
 The study was done using an Arduino UNO, thus making one of its two microcontrollers, “16u2” (which is normally used for USB-Serial translation) to become an AVR Microcontroller with USB functions.
 
-    
-### Necessary materials:
-    
 
- - [x] Arduino Uno 
- - [x] 3 female-female cables 
- - [x] 1 female-male cable 
- - [x] Capacitor 100nF 
+### Necessary materials:
+
+
+ - [x] Arduino Uno
+ - [x] 3 female-female cables
+ - [x] 1 female-male cable
+ - [x] Capacitor 100nF
  - [x] Cable Usb 2.0 A/b - Arduino Uno
 
 
@@ -58,12 +60,12 @@ The study was done using an Arduino UNO, thus making one of its two microcontrol
 # Wire up Arduino Uno
 
 -   Follow the image:
-    
+
 
 ![](https://lh6.googleusercontent.com/ebd-WA4LsjPmLMr_DUwZ4H7bPtmUyPkVGWdaHdyh5LhEovUpLOdO7Oyv3_k7IgnnTp9TCkFyURe3gAYyhk3OQljqjXMvYMSAp11maWL4YlGuil0T7M3gMq-WrqumqCyHp7epoTNj)
 
 # What is HoodLoader2
-    
+
 
 “HoodLoader2 is a CDC BootLoader with self reprogramming and Fast USB-Serial function.
 
@@ -71,14 +73,14 @@ An Arduino Uno/Mega board has two Microcontroller of which one(16u2) is normally
 
 HoodLoader2 gives you the option to reprogram the 16u2 of a normal Arduino Uno/Mega R3 with custom sketches. This means you can use the 16u2 as a normal USB AVR like a Leonardo. You have a full compatible USB-HID core, CDC Serial and you can also use the 7 i/o pins of the 16u2. The extended HID devices of the HID Project also apply for the HoodLoader2.” - [https://github.com/NicoHood/HoodLoader2](https://github.com/NicoHood/HoodLoader2)
 
-  
+
 
 # What is HID
-    
+
 
 The idea is to enable enhanced USB functions to almost all 'standard' Arduino boards.
 
-  
+
 
 # How to install HoodLoader2
 
@@ -89,7 +91,7 @@ With Arduino connected to your computer:
 4.  Upload the installation sketch to your Arduino Uno
 5.  Wait until "Done uploading"
 6.  **Disconnect the Arduino from USB**
-    
+
 The Led will blink slow 1blink/sec. Wait until it is finished and the on board led will blink fast 10blink/sec.
 
 URL:`https://raw.githubusercontent.com/NicoHood/HoodLoader2/master/package_NicoHood_HoodLoader2_index.json`
@@ -105,7 +107,7 @@ After
 
 
 # How to install HID
-   First Download the [Zip](https://github.com/NicoHood/HID/archive/refs/heads/master.zip) . Official instructions on how to install a library can be [found here](http://arduino.cc/en/pmwiki.php?n=Guide/Libraries). 
+   First Download the [Zip](https://github.com/NicoHood/HID/archive/refs/heads/master.zip) . Official instructions on how to install a library can be [found here](http://arduino.cc/en/pmwiki.php?n=Guide/Libraries).
 
 # POC
 

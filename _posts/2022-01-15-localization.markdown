@@ -1,9 +1,11 @@
 ---
 layout: post
-title: Good Practices to Localize Your Game
+title: LiveOps Localization System for Your Game
 date: 2022-01-15 20:32:20 +0300
-img: localization.jpg 
-tags: [C#, Tools, Python, AWS Cloud, Unity]
+categories: [Backend Development, Tools]
+image:
+  path: /assets/img/localization.jpg
+tags: [CSharp, Tools, Python, AWS Cloud, Unity]
 ---
 
 Project files: https://github.com/GabrielPrzybysz/liveops-localization-system
@@ -39,11 +41,11 @@ I'll show you how it's possible to do any text update in a LiveOps way without h
 
 ### **Technologies**
 
- - Unity 
- - AWS Lambdas 
- - AWS S3  
- - StackPath 
- - C# 
+ - Unity
+ - AWS Lambdas
+ - AWS S3
+ - StackPath
+ - C#
  - Python3
 
 # Why Use this Technique?
@@ -52,14 +54,14 @@ I'll show you how it's possible to do any text update in a LiveOps way without h
 
 Not only programmers can edit localization files. Anyone can it's simple to edit strings within the game. It is no longer a complex and dangerous file. It becomes a spreadsheet that is easy to access and modify.
 
-### **It is possible to automate repetitive texts** 
+### **It is possible to automate repetitive texts**
 
 With a little more advanced knowledge of spreadsheets and Google Sheet formulas, you can automate various texts. No more writing "speech_99", "speech_100" for your text key, do it with a Google Sheets formula.
- 
+
 ### **Finding and editing an error is much easier**
 
 We will see at the time of creating our spreadsheet how to make the margin of error miniscule.
- 
+
 ### **Promotional texts anytime**
 
 By adding the LiveOps system, it's possible to build a "What's New" for your game, for example. In which you can put any text. Encouraging the purchase of some DLC or something! All this without any build, recompilation, etc.
@@ -73,7 +75,7 @@ The structure is simple. The "header" of the spreadsheet has the access key and 
 
 To avoid some errors, some formulas were created to identify them:
 
-a. **Empty Cell** 
+a. **Empty Cell**
 
 An empty cell can harm when our Parser reads the .csv, so, to avoid this type of error, we add a Conditional Format to check if there is any and if so, we paint it red:
 
@@ -91,7 +93,7 @@ c. **Cell with space at the end or beginning**
 
 Unnecessary characters are common. Space at the end and beginning of the cell, to prevent another Conditional Format is added:
 
-![](https://lh3.googleusercontent.com/N2mKnHtKjwMeL_spL-n40LwBPlZyeKfudKypLITCc55rjVPwRbJIkKnJCd1NMP-fOaUpKBcE6VCzk0tD2Df1GQIJj4GuiKKeQYKTPtdhH88sScVYa4wm76TOlt9ZRoOe-k1qhgZe) 
+![](https://lh3.googleusercontent.com/N2mKnHtKjwMeL_spL-n40LwBPlZyeKfudKypLITCc55rjVPwRbJIkKnJCd1NMP-fOaUpKBcE6VCzk0tD2Df1GQIJj4GuiKKeQYKTPtdhH88sScVYa4wm76TOlt9ZRoOe-k1qhgZe)
 
 ### **Permissions**
 
@@ -111,7 +113,7 @@ This AWS bucket stores the Localization .csv. This .csv comes from a Lambda that
 2. Does not block all public access
 
 
-# Creating Lambda 
+# Creating Lambda
 After carrying out the previous steps, we need a way to have a version of our spreadsheet in AWS S3 in the correct file format, for we are going to use lambdas AWS
 
 ### **Why AWS Lambdas?**
@@ -169,7 +171,7 @@ def create_file_in_s3():
 
 	binary_csv = download_csv()
 	s3 = boto3.resource("s3")
-	
+
 	s3.Bucket(BUCKET_NAME).put_object(ACL='public-read-write', Key=FILE_NAME, Body=binary_csv)
  ```
 
@@ -180,49 +182,49 @@ Now in Unity, we need to find a way to use the created file. It needs to be easi
 To start, we need an async download of our localization file hosted on AWS to occur. For this reason, we created the LocalizationDownloader.cs script.
 
 ```csharp
-using System;  
-using System.Collections;  
-using System.Collections.Generic;  
-using UnityEngine;  
-using UnityEngine.Networking;  
-  
-public class LocalizationDownloader : MonoBehaviour  
-{  
-  private const string CSV_URL = "";  
-  private static string _rawLocalizationCsv;  
-  private static readonly int Loading = Animator.StringToHash("loading");  
-  
-  [SerializeField]  
-  private Animator _loadingAnimator;  
-  
-  public static string RawLocalization => _rawLocalizationCsv;  
-  
-  public static bool IsLoading = true;  
-  
- void Awake()  
- {  
-	DontDestroyOnLoad(this);  
-	StartCoroutine(DownloadLocalization());  
- }  
- 
- private IEnumerator DownloadLocalization()  
- {  
-	using (UnityWebRequest client = UnityWebRequest.Get(CSV_URL))  
-	{  
-		UnityWebRequestAsyncOperation result = client.SendWebRequest();  
-		SetLoad(true);  
-		yield return new WaitUntil(() => result.isDone);  
-		SetLoad(false);  
-		_rawLocalizationCsv = result.webRequest.downloadHandler.text;  
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Networking;
+
+public class LocalizationDownloader : MonoBehaviour
+{
+  private const string CSV_URL = "";
+  private static string _rawLocalizationCsv;
+  private static readonly int Loading = Animator.StringToHash("loading");
+
+  [SerializeField]
+  private Animator _loadingAnimator;
+
+  public static string RawLocalization => _rawLocalizationCsv;
+
+  public static bool IsLoading = true;
+
+ void Awake()
+ {
+	DontDestroyOnLoad(this);
+	StartCoroutine(DownloadLocalization());
+ }
+
+ private IEnumerator DownloadLocalization()
+ {
+	using (UnityWebRequest client = UnityWebRequest.Get(CSV_URL))
+	{
+		UnityWebRequestAsyncOperation result = client.SendWebRequest();
+		SetLoad(true);
+		yield return new WaitUntil(() => result.isDone);
+		SetLoad(false);
+		_rawLocalizationCsv = result.webRequest.downloadHandler.text;
 	}
-	   
-	LocalizationController.Instance.Initialize();  
- }  
- 
-private void SetLoad(bool isLoading)  
-{  
-	_loadingAnimator.SetBool(Loading, isLoading);  
-	IsLoading = isLoading;  
+
+	LocalizationController.Instance.Initialize();
+ }
+
+private void SetLoad(bool isLoading)
+{
+	_loadingAnimator.SetBool(Loading, isLoading);
+	IsLoading = isLoading;
  }
 }
 ```
@@ -235,67 +237,67 @@ With the library installed, let's create a controller to merge this library with
 
 How to merge downloaded data with the CSVHelper library?
 
-```csharp  
-  
-private void LoadLocalizationFromCSV()  
-{  
-	 CsvConfiguration csvConfiguration = new CsvConfiguration(CultureInfo.CurrentCulture)  
-	 {  
-	     HasHeaderRecord = false,  
-		 Delimiter = ","  
-	 };  
-  
-	 using (var csvParser =  new CsvParser(new StringReader(LocalizationDownloader.RawLocalization), csvConfiguration))  
-	 {  
-		 using (var csvReader = new CsvReader(csvParser))  
-		 {  
-			  try  
-			  {  
-				  var localizationSheet = csvReader.GetRecords<CSVContent>().ToList();  
-  
-				  foreach (var rawItem in localizationSheet)  
-				  {  
-					  _localizedItems.Add(rawItem.KEY, new LocalizationItem(rawItem.en, rawItem.es, rawItem.pt));  
-				  } 
-			  }  
-		      catch (Exception e)  
-			  {  
-				  Console.WriteLine(e.Message);  
-				  throw;  
-			  } 
-	    } 
+```csharp
+
+private void LoadLocalizationFromCSV()
+{
+	 CsvConfiguration csvConfiguration = new CsvConfiguration(CultureInfo.CurrentCulture)
+	 {
+	     HasHeaderRecord = false,
+		 Delimiter = ","
+	 };
+
+	 using (var csvParser =  new CsvParser(new StringReader(LocalizationDownloader.RawLocalization), csvConfiguration))
+	 {
+		 using (var csvReader = new CsvReader(csvParser))
+		 {
+			  try
+			  {
+				  var localizationSheet = csvReader.GetRecords<CSVContent>().ToList();
+
+				  foreach (var rawItem in localizationSheet)
+				  {
+					  _localizedItems.Add(rawItem.KEY, new LocalizationItem(rawItem.en, rawItem.es, rawItem.pt));
+				  }
+			  }
+		      catch (Exception e)
+			  {
+				  Console.WriteLine(e.Message);
+				  throw;
+			  }
+	    }
 	}
-}  
+}
 ```
 
 It needs to be easily accessible by the UI system and simple to use, so now:
 
 ```csharp
-public string Localize(string key)  
-{  
-	 switch (CurrentLanguage)  
-	 {  
-		 case Languages.EN:  
-            return _localizedItems[key].En;  
-		  case Languages.ES:  
-            return _localizedItems[key].Es;  
-		  case Languages.PT:  
-            return _localizedItems[key].Pt;  
-		  default:  
-            throw new ArgumentOutOfRangeException();  
+public string Localize(string key)
+{
+	 switch (CurrentLanguage)
+	 {
+		 case Languages.EN:
+            return _localizedItems[key].En;
+		  case Languages.ES:
+            return _localizedItems[key].Es;
+		  case Languages.PT:
+            return _localizedItems[key].Pt;
+		  default:
+            throw new ArgumentOutOfRangeException();
 	 }
  }
 ```
 
 Now, with all that ready, let's create the script that will be added to the text element to be located:
 ```csharp
-	public class TextLocalize : MonoBehaviour  
-	{  
-		 [SerializeField] private string _keyToLocalize;  
-  
-		  private void OnEnable()  
-		  {  
-			  gameObject.GetComponent<Text>().text = LocalizationController.Instance.Localize(_keyToLocalize);  
+	public class TextLocalize : MonoBehaviour
+	{
+		 [SerializeField] private string _keyToLocalize;
+
+		  private void OnEnable()
+		  {
+			  gameObject.GetComponent<Text>().text = LocalizationController.Instance.Localize(_keyToLocalize);
 		  }
 	}
 ```

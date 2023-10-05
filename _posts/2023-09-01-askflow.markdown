@@ -2,7 +2,9 @@
 layout: post
 title: AskFlow Security
 date: 2023-09-01 20:32:20 +0300
-img: askflow.jpg 
+categories: [Security, Pentest]
+image:
+  path: /assets/img/askflow.jpg
 tags: [Python3, Cloudflare, Security, Pentest]
 ---
 
@@ -45,7 +47,7 @@ The API is providing data for the question-and-answer website he (Heitor) put to
 
 ## First Step
 
-**Initial Approach:** 
+**Initial Approach:**
 When dealing with web applications, my first move is to begin by mapping out the endpoints and user inputs. Typically, my goal is to pinpoint the server's hosting location and the underlying operating system in use. However, in this scenario, everything is running within a Docker environment on my Linux machine.
 
 ## Exploring the Endpoints:
@@ -126,7 +128,7 @@ Taking a sweep through the application, we spot the JWT implementation, and that
 
 ![image](https://github.com/GabrielPrzybysz/gabeblog/assets/45472156/3e611543-13ae-4e22-9ca7-55aa0bdd6613)
 
-So, simply by tweaking a value in the request and sending any valid JWT, you could play the role of any existing user in the database. 
+So, simply by tweaking a value in the request and sending any valid JWT, you could play the role of any existing user in the database.
 
 I am logged in as the user (id: 22):
 
@@ -174,7 +176,7 @@ Check out this script:
 ![image](https://github.com/GabrielPrzybysz/gabeblog/assets/45472156/eca46086-812d-4751-a930-c7e6d492778f)
 ![image](https://github.com/GabrielPrzybysz/gabeblog/assets/45472156/432d8d15-a44e-4e13-8c9a-af0dc1e920aa)
 
-And just like that, you're keeping tabs on all the site's activity. Take a look: 
+And just like that, you're keeping tabs on all the site's activity. Take a look:
 
 ![image](https://github.com/GabrielPrzybysz/gabeblog/assets/45472156/ce10d338-3c2c-42fb-bb0b-e5a09b37a094)
 

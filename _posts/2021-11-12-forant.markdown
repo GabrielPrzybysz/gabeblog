@@ -1,9 +1,11 @@
 ---
 layout: post
-title: How I Created a Serverless Chan Forum
+title: How I Build a Serverless Chan Forum
 date: 2021-11-12 20:32:20 +0300
-img: 4ant.jpg 
-tags: [C#, AWS Cloud]
+categories: [Backend Development, Serverless]
+image:
+  path: /assets/img/4ant.jpg
+tags: [CSharp, AWS Cloud]
 ---
 
 # **Intro**
@@ -50,7 +52,7 @@ An example of binding is the one done for our Nickname field:
 <input type="text" asp-for="Nickname" placeholder="Your Nick">
 ```
 
-**Controller:** 
+**Controller:**
 ```csharp
 [BindProperty] public string Nickname { get; set; } = "";
 ```
@@ -70,7 +72,7 @@ public async Task PutTopic(Topic newTopic)
    request.Method = "POST";
    request.ContentType = "application/json";
    request.Headers.Add("x-api-key","key");
-  
+
    using (var streamWriter = new StreamWriter(await request.GetRequestStreamAsync()))
    {
        string json = JsonConvert.SerializeObject(newTopic);
@@ -95,26 +97,26 @@ To create the lambdas follow these steps:
  1. **Inside of console, look for the lambda service** <br>
 ![](https://lh3.googleusercontent.com/w-DWV9RObC3TIOUNywYfg-HXbri6FZcuK090EGl3hkNj2hpIvIV4fJ6IGhTDGzB-ORfbYvu_6gj_IXqXZF_KdlgqWtr9FfxHezJD4bDJb2S8sRXj9GrkYUxt2g3ZKM96Oqo66KJp)
  <br>
- 
- 
+
+
  2.  **Go to "Create a function"** <br>
 
 ![](https://lh5.googleusercontent.com/T4Zdim5GI2sCGoJ0jPzrKfyxzKCMMiOi-zbkzUwPJmgOGxl5wTOkYAdVR06qTtFoyCLMJedzvwYY2zSfaLTibc1EqxMVKsmN6WX4D9dGs4WvH4-7xDbwCXRSnHyWMP4aqm-ByPj4)
 <br>
 
  3. **Set the following informations:**
-   
+
 		1.  Function Name
-    
+
 		2.  Use architecture x86_64
-    
+
 		3.  Choose the language to use to write your function. (Python3.8)
-    
+
 		4.  To create roles, let it create automatically and change it later
 
 4. **After creating it, go to Configurations > Permissions > Click on your Role**
 5.   **Add policies > add “AmazonDynamoDBFullAccess”**
- 
+
 
 ## *Code*
 
@@ -159,7 +161,7 @@ Thus, performing a put operation for DynamoDB, adding one more daily topic.
 
 All my REST APIs have an api-key, thus making the process more secure, and also in them, there is a limit of requests per second, thus avoiding any attack of multiple requests.
 
- 1.   **In the tab of your lambda, look for the "Add Trigger"** 
+ 1.   **In the tab of your lambda, look for the "Add Trigger"**
 <br>
 
 ![](https://lh6.googleusercontent.com/zge7ic17fdKw4XfWAaU2MJ8vaUz72jzb9X2kFeUq8YJ4MniTfxFEgSaEFnaMSUgf7K6oLPnMeQU9qGCDMIOPkkhZ0xWiS1QHOWnZkbKp0TQ83iFkcRB-NnmMpu_I5IqxEMt81FwA)
@@ -168,14 +170,14 @@ All my REST APIs have an api-key, thus making the process more secure, and also 
 
  2.   **When choosing the trigger configuration, choose "API Gateway"**
  <br>
- 
+
 ![](https://lh3.googleusercontent.com/DkrgiJs1TyEzgzyXBpo_DdEDc-Oh4VDBGJw6PDYcyw7XXWCCIibwyVChXC_MraqFIeHGa1YITdReWxQzmkNEfEpxApah8K-0_2K4dttNTPb9QVDxyjV9t6RLTV0bdzvqACOSyCnX)
  <br>
- 
- 
- 3. **Configure following the following image** 
+
+
+ 3. **Configure following the following image**
  <br>
- 
+
 ![](https://lh3.googleusercontent.com/ZvK9MfmZQItVcr8i_sVFetxbQaR-iPiER0eNbDliq4N3093QV0FScdkNRavUyds5grotffKxrpCNoEArQPgWXvMKiHsX8XbFVTKSJfT-tHjaVo_jx10oGTbDT4y87m9iqGC8XIOW)
  <br>
 

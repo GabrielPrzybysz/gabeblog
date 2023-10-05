@@ -2,8 +2,10 @@
 layout: post
 title: A Battle to Debug
 date: 2022-04-12 20:32:20 +0300
-img: a_battle_to_debug.jpg 
-tags: [Python3, Cloudflare, Unity, C#]
+categories: [Backend Development, Tools]
+image:
+  path: /assets/img/a_battle_to_debug.jpg
+tags: [Python3, Cloudflare, Unity, CSharp]
 ---
 
 ## *Special Thanks*
@@ -39,7 +41,7 @@ As we can see in the image, the idea was to be agile, to do everything locally. 
 https://blog.cloudflare.com/tunnel-for-everyone/
 
  - **Creating the tunnel**
- 
+
 Entering Cloudflare's Zero Trust area, we can see the Tunnels tab:
 
 ![](https://lh3.googleusercontent.com/NRTfoxJMzis28ZtRZgr9tgCAyWnj07JTbjeLQEos3ygvQOAbZC_D_N1X3AF4Q8PILvdQyBHclos6aIViFk3hjMFRQfaEV-vHeUeGZo1K5pcNzkw7pt9ncSY4FGNYyeYGNheWC40D)
