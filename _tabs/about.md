@@ -41,12 +41,3 @@ I've got a special thing going on with various programming languages, including:
 - JavaScript
 - Java
 
-## Wanna Peek at My Resume?
-
-If you want to take a look at my resume and learn more about my journey, just click [here](https://github.com/GabrielPrzybysz/gabeblog/files/12811759/Resume.-.Gabriel.Przybysz.EN.Security.pdf) to download the PDF.
-
-Always remember the wise words of Albert Einstein: "The important thing is not to stop questioning. Curiosity has its own reason for existence."
-
-Feel free to comment, ask questions, or share your own tech experiences. I'm stoked to grow alongside all of you in this amazing journey!
-
-
