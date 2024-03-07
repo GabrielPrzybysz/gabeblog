@@ -1,0 +1,105 @@
+---
+layout: post
+title: "Unmasking GitHub: A Peek into an Exposed Exploit"
+date: 2024-01-17 01:32:20 +0300
+categories: [Security, Pentest]
+image:
+  path: /assets/img/github_exploit.jpg
+tags: [Security, Pentest]
+---
+
+
+## Warning
+This post is not intended to encourage any illegal activity. Its purpose is to analyze the mechanisms employed by malicious attackers, serving as a cautionary measure and promoting awareness about cybersecurity. There is no intention to compromise the security of our lives (I am vehemently against any such attempts); rather, the aim is to disseminate knowledge about information technology and security. It is recommended that the content be used exclusively to enhance understanding of the subject and safeguard digital environments.
+
+***⁠”Cybersecurity is much more than a technical issue; it's a matter of trust." - Jim Stickley***
+
+Throughout the text, irony may be employed to underscore the importance of digital security more emphatically.
+
+## Setting the Stage for the Tale
+
+To kick off this story, it seems fitting to provide a broader context on how I found myself in this predicament. As a security guy, my digital footprint has always irked me a bit. Yet, the inevitable clash arises when I need to self-promote to earn a living and secure job opportunities. However, I made a rather grave error; I left my résumé public with various contact details (I know, I can be an idiot sometimes). The link to the résumé was in a Markdown file on my GitHub. The plan was to hope it wasn't an image I uploaded to the repository (as that would leave a commit history), and secondly, try to disable the link in the Markdown. As per usual, I glanced at the link, and the link stared back at me, prompting the question: where on earth is this hosted? I had no control over that link; it would linger there indefinitely, my information immortalized in who-knows-where. When you drag a file from your computer into GitHub's Markdown, it runs a JavaScript to send that file to their server (even before you commit the altered Markdown). So, all I needed to do was drag it into the Markdown, wait for it to generate the link, and I'd have someone hosting whatever I pleased behind a GitHub link. **Can you spot the problem here?**
+
+## Exploring
+
+One of the questions raised by my friend Paulo Godinho was: Is this utilizing my account's billing? Is this file host charging me for anything? The answer was: No, it's not charging me anything.
+
+However, not everything is smooth sailing; we do have some restrictions:
+
+- Files up to 10 MB (which is quite substantial).
+- Not all file types were accepted, but most are, including:
+
+    - PNG (.png)
+    - GIF (.gif)
+    - JPEG (.jpg, .jpeg)
+    - SVG (.svg)
+    - Log files (.log)
+    - Markdown files (.md)
+    - Microsoft Word (.docx), PowerPoint (.pptx), and Excel (.xlsx) documents
+    - Text files (.txt)
+    - PDFs (.pdf)
+    - ZIP (.zip, .gz, .tgz)
+    - Video (.mp4, .mov, .webm)
+
+Yes, most of them are highly vulnerable. But you might be thinking, "They use a Web Application Firewall (WAF) to protect users from attackers who upload scripts or attempt XSS injections, right?"
+
+To your surprise, NO! They couldn't care less about that. They employ a third-party technology called Camo, and whenever you formally report these vulnerabilities, they claim it's by design. As if insecurity is meant to be by design—nothing leading users into error should be by design, and generating a URL to mimic their repository files seems far from secure. If, as a developer, you encountered a link containing github.com and the URL of a repository you trust, wouldn't you click it? Well, if you did, sadly, that's by design.
+
+But hold on, how does all this work? Give me steps for it, my friend! Hot-off-the-press steps, of course:
+
+Since it's by design, reproduce the steps in any repository! Whether it's yours or not, after all, it's by design.
+
+1. Create a cool file to be your payload. For instance, I used the following:
+
+   **payload.svg** -> `<svg xmlns="http://www.w3.org/2000/svg" onload="alert(1)"/>`
+
+   Of course, you can upload any type of file, but here, we love JavaScript and, of course, a bit of XSS. After all, this is all by design.
+
+2. Open any repository and go to the Issues section. Create a new issue (no need to submit it; you'll see the POC video right after).
+
+3. Drag and drop the file and wait for the magic to happen.
+
+4. A URL will be generated, similar to this: `https://github.com/github/hackathons/assets/{repoid}/{fileId}.svg`
+
+   Of course, I used their hackathons repository since it's by design; I shouldn't worry. Now, with this, we have a URL from a legitimate repository leading to an XSS, and of course, the link's appearance is entirely harmless.
+
+## Protect Yourself
+
+This kind of issue is entirely foreseeable and solvable on the part of the GitHub team. Every link we click with the GitHub domain now demands extra caution. It can lead you to an IP leak or even to some content you'd rather not see (NSFW), even if it's from a legitimate repository, a legitimate URL, or a legitimate user. You must be careful because GitHub believes that this type of behavior is by design and should be maintained.
+
+## Video POC
+
+https://youtu.be/xwfSHWV2opU
+
+## Host Your Files
+
+The upside to all this is: You can host your files for free, LOL. Is your Drive or iCloud full? Utilize GitHub repositories because there's no limit to the number of files (only size, as mentioned earlier). Unfortunately, this will be exploited for malicious purposes, for distributing malware, and so on. But, of course, all of this is by design.
+
+## IP Leak
+
+When you access a URL that has been infected with a payload, your browser will send a request to the URL specified in the payload—an OPTIONS request, to be precise. However, this seemingly innocuous request is sufficient for the attacker to obtain your IP address.
+
+## Unveiling the Perils: A Glimpse into the Potential Dangers
+
+You can test it for yourself by entering this super secure link from the GitHub repository: https://github.com/github/ruby/assets/45472156/bf9410cf-232d-450a-bf61-d1209ee0637e
+
+And with this payload ![image](https://github.com/GabrielPrzybysz/gabeblog/assets/45472156/56cfd044-fb93-4742-8346-b4cf732153bd)
+
+
+![a](https://github.com/github/ruby/assets/45472156/b56b6c50-6ce7-4121-b367-8f96311fc86e)
+
+You can redirect anyone to any website.
+
+The initial idea was to create a file automator and build my own Drive, but unfortunately, this could potentially violate some guidelines, and we definitely don't want legal trouble.
+
+## The Frustration of Unaddressed Reports
+
+So, here's the deal: I've been in the trenches, folks. I've raised two red flags about this whole situation, shot off two reports to the security team, and what do I get? Crickets.
+
+I mean, come on! I detailed the ins and outs, the vulnerabilities, the potential dangers lurking in the shadows. I practically served it on a silver platter. But nope, it seems like my reports are taking a scenic route through the support system, maybe on vacation or something.
+
+I get it, they probably have tons of reports flooding in, but hey, I'm waving the "urgent" flag here. This isn't your run-of-the-mill "fix it whenever" situation. We're talking about potential IP leaks, NSFW content popping up unexpectedly—all under the charming label of "by design."
+
+Maybe they think I'm crying wolf or that I've stumbled upon some weird feature they implemented on purpose. Whatever it is, it's frustrating. I just want someone to take this seriously, throw on their security superhero cape, and fix this mess before it spirals out of control.
+
+But here I am, stuck in a loop of unaddressed reports, wondering if anyone out there is even listening. Guess I'll keep trying to make some noise until someone at the other end decides it's worth a second look. Fingers crossed.
