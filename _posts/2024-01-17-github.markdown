@@ -69,7 +69,11 @@ This kind of issue is entirely foreseeable and solvable on the part of the GitHu
 
 ## Video POC
 
-https://youtu.be/xwfSHWV2opU
+
+
+https://github.com/GabrielPrzybysz/gabeblog/assets/45472156/547ed8a4-1f76-46d1-a255-beb2d137050a
+
+
 
 ## Host Your Files
 
